@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090b12">
+  <meta name="description" content="TikTok Account Care menyediakan bantuan semakan, panduan pemulihan akaun, rayuan sekatan TikTok Shop dan TikTok LIVE serta konsultasi pembeli.">
+  <title>TikTok Account Care | Account Support & Recovery Guidance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090b12;
+      --bg-soft: #101522;
+      --panel: #121927;
+      --panel-2: #171f30;
+      --white: #f7f8fb;
+      --muted: #9aa4b5;
+      --muted-2: #6f7b8e;
+      --line: rgba(255,255,255,.10);
+      --gold: #d7b56d;
+      --gold-light: #f0d69d;
+      --cyan: #69e7e7;
+      --pink: #ff6b91;
+      --radius: 18px;
+      --shadow: 0 24px 70px rgba(0,0,0,.32);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .container { width: min(1160px, calc(100% - 44px)); margin: 0 auto; }
+    .ambient {
+      position: absolute; pointer-events: none; z-index: 0; filter: blur(95px); opacity: .17;
+      width: 330px; height: 330px; border-radius: 50%;
+    }
+    .ambient.cyan { background: var(--cyan); top: 120px; right: -150px; }
+    .ambient.pink { background: var(--pink); top: 450px; left: -190px; opacity: .10; }
+    .ambient.gold { background: var(--gold); bottom: 0; right: 10%; opacity: .08; }
+    .topline {
+      height: 34px; display: flex; align-items: center; justify-content: center;
+      background: #06080d; border-bottom: 1px solid var(--line);
+      color: #aab3c1; font-size: 10px; letter-spacing: .13em; text-transform: uppercase;
+    }
+    .topline b { color: var(--gold-light); font-weight: 700; margin: 0 5px; }
+    header { position: sticky; top: 0; z-index: 50; background: rgba(9,11,18,.83); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); }
+    .nav { height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 25px; }
+    .brand { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+    .brand-icon {
+      width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+      background: linear-gradient(135deg, rgba(105,231,231,.17), rgba(255,107,145,.16));
+      border: 1px solid rgba(255,255,255,.17); color: var(--gold-light);
+      font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 18px;
+      box-shadow: 4px 4px 0 rgba(105,231,231,.15), -3px -3px 0 rgba(255,107,145,.12);
+    }
+    .brand-name { font-family: "Space Grotesk", sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -.03em; }
+    .brand-name span { color: var(--gold); }
+    .brand-sub { display: block; color: var(--muted-2); font-size: 8px; letter-spacing: .2em; text-transform: uppercase; margin-top: 1px; }
+    .nav-links { display: flex; align-items: center; gap: 28px; color: #b4bdca; font-size: 12px; }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-action { padding: 11px 17px; border: 1px solid rgba(215,181,109,.65); color: var(--gold-light); border-radius: 7px; font-size: 11px; font-weight: 700; }
+    .nav-action:hover { background: var(--gold); color: #111; }
+    .menu-toggle { display: none; border: 0; background: transparent; color: white; font-size: 25px; cursor: pointer; }
+
+    .hero { position: relative; isolation: isolate; padding: 108px 0 125px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 55px; position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; color: var(--gold-light);
+      border: 1px solid rgba(215,181,109,.25); background: rgba(215,181,109,.07);
+      padding: 7px 12px; border-radius: 30px; font-size: 9px; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase; margin-bottom: 23px;
+    }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+    h1, h2, h3 { font-family: "Space Grotesk", sans-serif; }
+    .hero h1 { font-size: clamp(43px, 6.1vw, 74px); letter-spacing: -.065em; line-height: 1.03; max-width: 690px; }
+    .hero h1 .gradient {
+      background: linear-gradient(95deg, var(--gold-light), #fff1ce 48%, var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero-copy { max-width: 550px; margin: 23px 0 29px; color: #a5afbf; font-size: 14px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 48px; padding: 0 19px; border-radius: 7px; border: 1px solid transparent;
+      cursor: pointer; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      transition: .22s ease;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-gold { background: linear-gradient(110deg, #c49a4e, #eed49a); color: #15130e; box-shadow: 0 10px 28px rgba(215,181,109,.16); }
+    .btn-gold:hover { box-shadow: 0 13px 35px rgba(215,181,109,.28); }
+    .btn-ghost { border-color: rgba(255,255,255,.18); color: var(--white); background: rgba(255,255,255,.035); }
+    .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+    .hero-foot { display: flex; flex-wrap: wrap; gap: 19px; margin-top: 29px; color: #7f8a9c; font-size: 10px; }
+    .hero-foot span { display: flex; align-items: center; gap: 7px; }
+    .hero-foot i { color: var(--cyan); font-style: normal; }
+
+    .visual-card {
+      position: relative; min-height: 440px; border-radius: 25px; padding: 24px;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(105,231,231,.15), transparent 32%),
+        radial-gradient(circle at 12% 95%, rgba(255,107,145,.13), transparent 32%),
+        linear-gradient(145deg, #1b2639, #0d1320 68%);
+      border: 1px solid rgba(255,255,255,.12); box-shadow: var(--shadow); overflow: hidden;
+    }
+    .visual-card:before {
+      content: ""; position: absolute; width: 270px; height: 270px; border: 1px solid rgba(215,181,109,.23);
+      border-radius: 50%; right: -80px; top: -80px; box-shadow: 0 0 0 28px rgba(215,181,109,.025), 0 0 0 58px rgba(215,181,109,.018);
+    }
+    .visual-top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+    .visual-label { color: #8d9aad; font-size: 9px; letter-spacing: .17em; text-transform: uppercase; }
+    .status-pill { border: 1px solid rgba(105,231,231,.25); color: var(--cyan); background: rgba(105,231,231,.08); padding: 6px 9px; border-radius: 30px; font-size: 9px; }
+    .phone-mock {
+      position: relative; z-index: 1; width: 225px; margin: 35px auto 20px; padding: 11px;
+      border-radius: 30px; background: #070a11; border: 1px solid rgba(255,255,255,.24);
+      box-shadow: 0 25px 55px rgba(0,0,0,.48); transform: rotate(-5deg);
+    }
+    .phone-screen { border-radius: 21px; min-height: 280px; padding: 20px 15px; background: linear-gradient(160deg, #1d2a3e, #111827); }
+    .phone-camera { width: 65px; height: 12px; border-radius: 20px; background: #05070b; margin: -14px auto 20px; }
+    .profile-circle {
+      width: 58px; height: 58px; margin: 0 auto 11px; border-radius: 50%; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--gold), #f3e3bb); color: #151923; font-size: 23px; font-weight: 800;
+    }
+    .mock-title { text-align: center; font-size: 12px; font-weight: 800; }
+    .mock-sub { text-align: center; color: #93a0b3; font-size: 8px; margin-top: 3px; }
+    .mock-status { margin: 19px 0 11px; display: flex; align-items: center; justify-content: space-between; font-size: 8px; color: #aab5c5; }
+    .mock-status b { color: var(--gold-light); font-size: 8px; }
+    .mock-bar { height: 6px; background: #28364a; border-radius: 20px; overflow: hidden; }
+    .mock-bar span { display: block; width: 72%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--cyan)); border-radius: 20px; }
+    .mock-note { padding: 11px; margin-top: 17px; border-radius: 10px; background: rgba(105,231,231,.07); border: 1px solid rgba(105,231,231,.16); color: #a7c8cc; font-size: 8px; line-height: 1.5; }
+    .float-chip {
+      position: absolute; z-index: 2; display: flex; align-items: center; gap: 9px;
+      background: rgba(19,29,44,.92); border: 1px solid rgba(255,255,255,.13);
+      padding: 11px 13px; border-radius: 11px; box-shadow: 0 12px 28px rgba(0,0,0,.25);
+      backdrop-filter: blur(10px);
+    }
+    .float-chip .chip-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: rgba(215,181,109,.13); color: var(--gold-light); font-size: 15px; }
+    .float-chip strong { display: block; font-size: 9px; }
+    .float-chip small { display: block; color: #8491a4; font-size: 8px; }
+    .chip-one { top: 130px; left: 4px; }
+    .chip-two { right: -3px; bottom: 78px; }
+
+    .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.018); }
+    .trust-inner { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; padding: 22px 0; }
+    .trust-item { display: flex; justify-content: center; align-items: center; gap: 11px; color: #a7b1c0; font-size: 10px; }
+    .trust-item b { color: var(--gold-light); font-size: 16px; font-family: "Space Grotesk", sans-serif; }
+
+    section.content-section { padding: 94px 0; position: relative; }
+    .section-kicker { color: var(--gold); font-size: 9px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-title { font-size: clamp(30px,4vw,46px); line-height: 1.13; letter-spacing: -.045em; }
+    .section-desc { max-width: 620px; color: var(--muted); font-size: 12px; margin-top: 14px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 34px; }
+    .service-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 17px; }
+    .service-card {
+      position: relative; overflow: hidden; padding: 27px; min-height: 260px; border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(24,34,52,.98), rgba(15,21,33,.98));
+      border: 1px solid rgba(255,255,255,.09); transition: .25s ease;
+    }
+    .service-card:hover { transform: translateY(-5px); border-color: rgba(215,181,109,.45); box-shadow: 0 20px 40px rgba(0,0,0,.2); }
+    .service-card:after { content: attr(data-number); position: absolute; right: 14px; bottom: -48px; font-family: "Space Grotesk", sans-serif; font-size: 180px; font-weight: 700; color: rgba(255,255,255,.025); line-height: 1; }
+    .service-top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+    .service-icon { width: 47px; height: 47px; border-radius: 13px; display: grid; place-items: center; font-size: 21px; background: rgba(215,181,109,.11); border: 1px solid rgba(215,181,109,.17); color: var(--gold-light); }
+    .service-no { color: #697589; font-size: 9px; letter-spacing: .15em; }
+    .service-card h3 { font-size: 22px; margin: 23px 0 8px; letter-spacing: -.03em; position: relative; z-index: 1; }
+    .service-card p { color: var(--muted); font-size: 11px; max-width: 450px; position: relative; z-index: 1; }
+    .service-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 19px; color: var(--gold-light); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; position: relative; z-index: 1; }
+    .service-link:hover { color: var(--cyan); }
+    .service-card.buyer { border-color: rgba(105,231,231,.2); background: linear-gradient(145deg, rgba(19,42,53,.92), rgba(15,21,33,.98)); }
+    .service-card.buyer .service-icon { background: rgba(105,231,231,.1); color: var(--cyan); border-color: rgba(105,231,231,.2); }
+
+    .process-section { background: linear-gradient(180deg, #0e1420, #0a0e17); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .process-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 17px; margin-top: 36px; }
+    .process-card { padding: 23px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.025); }
+    .process-num { color: var(--gold); font-family: "Space Grotesk", sans-serif; font-size: 28px; font-weight: 700; }
+    .process-card h3 { font-size: 17px; margin: 12px 0 7px; }
+    .process-card p { color: var(--muted); font-size: 10px; }
+
+    .buyer-note {
+      display: flex; align-items: flex-start; gap: 13px; padding: 17px 18px; margin-top: 22px;
+      border-radius: 12px; border: 1px solid rgba(105,231,231,.17); background: rgba(105,231,231,.045);
+      color: #a9bdc4; font-size: 10px;
+    }
+    .buyer-note b { color: var(--cyan); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+    details { padding: 17px 18px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.025); }
+    summary { cursor: pointer; list-style: none; font-size: 11px; font-weight: 700; display: flex; justify-content: space-between; gap: 14px; }
+    summary::-webkit-details-marker { display: none; }
+    summary:after { content: "+"; color: var(--gold); font-size: 17px; line-height: 1; }
+    details[open] summary:after { content: "−"; }
+    details p { color: var(--muted); font-size: 10px; padding-top: 12px; }
+
+    .contact-section { padding: 88px 0; }
+    .contact-box {
+      position: relative; overflow: hidden; padding: 48px; border-radius: 22px;
+      background: radial-gradient(circle at 100% 0%, rgba(105,231,231,.15), transparent 33%),
+                  radial-gradient(circle at 0% 100%, rgba(255,107,145,.12), transparent 35%),
+                  linear-gradient(120deg, #1a263a, #101725 75%);
+      border: 1px solid rgba(215,181,109,.24); box-shadow: var(--shadow);
+      display: flex; justify-content: space-between; align-items: center; gap: 30px;
+    }
+    .contact-box h2 { max-width: 630px; font-size: clamp(29px,4vw,44px); line-height: 1.1; letter-spacing: -.045em; }
+    .contact-box p { color: #9eabbd; font-size: 11px; margin-top: 12px; }
+    .contact-actions { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+    .contact-actions small { color: #7d8a9e; font-size: 9px; text-align: center; }
+
+    footer { padding: 35px 0 22px; border-top: 1px solid var(--line); background: #070910; }
+    .footer-top { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-bottom: 25px; }
+    .footer-copy { max-width: 430px; color: #778397; font-size: 10px; margin-top: 12px; }
+    .footer-contact { color: var(--gold-light); font-size: 11px; font-weight: 700; }
+    .footer-bottom { border-top: 1px solid var(--line); padding-top: 16px; display: flex; justify-content: space-between; gap: 15px; color: #657184; font-size: 9px; }
+    .disclaimer { max-width: 650px; margin-top: 13px; color: #687487; font-size: 9px; line-height: 1.6; }
+
+    .wa-float {
+      position: fixed; z-index: 60; right: 20px; bottom: 20px; width: 55px; height: 55px;
+      display: grid; place-items: center; border-radius: 50%; color: #07120d; background: #6be2a1;
+      box-shadow: 0 9px 30px rgba(0,0,0,.35); font-size: 24px; transition: .2s;
+    }
+    .wa-float:hover { transform: translateY(-4px); }
+    .wa-float span { position: absolute; right: 65px; padding: 7px 10px; background: #f7f8fb; color: #101522; border-radius: 6px; white-space: nowrap; font-size: 9px; font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .hero-grid { gap: 30px; grid-template-columns: 1fr .85fr; }
+      .visual-card { min-height: 400px; padding: 18px; }
+      .phone-mock { width: 200px; }
+      .chip-one { left: -8px; }
+      .chip-two { right: -8px; }
+      .nav-links { gap: 17px; }
+    }
+    @media (max-width: 700px) {
+      .container { width: min(100% - 32px, 560px); }
+      .nav { height: 68px; }
+      .menu-toggle { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 16px; right: 16px; padding: 20px;
+        flex-direction: column; align-items: stretch; gap: 17px; background: #0c111d;
+        border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+      }
+      .nav-links.open { display: flex; }
+      .nav-action { text-align: center; }
+      .hero { padding: 76px 0 88px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 52px; }
+      .hero-copy { font-size: 12px; }
+      .hero-buttons .btn { flex: 1 1 100%; }
+      .visual-card { width: min(100%, 440px); min-height: 390px; margin: 12px auto 0; }
+      .phone-mock { margin-top: 28px; }
+      .trust-inner { grid-template-columns: 1fr; gap: 13px; padding: 18px 0; }
+      .trust-item { justify-content: flex-start; }
+      section.content-section { padding: 70px 0; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .service-grid { grid-template-columns: 1fr; }
+      .service-card { min-height: 235px; padding: 23px; }
+      .process-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .contact-box { padding: 29px 22px; flex-direction: column; align-items: flex-start; }
+      .contact-actions { width: 100%; }
+      .contact-actions .btn { width: 100%; }
+      .footer-top { flex-direction: column; align-items: flex-start; }
+      .footer-bottom { flex-direction: column; }
+      .wa-float { width: 51px; height: 51px; right: 14px; bottom: 14px; }
+    }
+    @media (max-width: 380px) {
+      .hero h1 { font-size: 44px; }
+      .float-chip { transform: scale(.88); }
+      .chip-one { transform-origin: left center; }
+      .chip-two { transform-origin: right center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topline">Professional account support <b>•</b> Clear process <b>•</b> WhatsApp consultation</div>
+  <header>
+    <div class="container nav">
+      <a href="#home" class="brand" aria-label="TikTok Account Care home">
+        <div class="brand-icon">TC</div>
+        <div><div class="brand-name">ACCOUNT<span>CARE.</span></div><span class="brand-sub">TikTok account support</span></div>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="nav-action">Get Consultation ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="ambient cyan"></div><div class="ambient pink"></div>
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="live-dot"></span> Digital account assistance</div>
+          <h1>Your account.<br>Your platform.<br><span class="gradient">A clearer way forward.</span></h1>
+          <p class="hero-copy">Perlukan bantuan berkaitan akaun TikTok? Kami menyediakan konsultasi, semakan isu dan panduan proses rayuan melalui saluran rasmi untuk membantu anda memahami langkah seterusnya.</p>
+          <div class="hero-buttons">
+            <a class="btn btn-gold" href="#services">Explore Services <span>↗</span></a>
+            <a class="btn btn-ghost" href="https://wa.me/601127838726?text=Hi%2C%20saya%20ingin%20mendapatkan%20konsultasi%20TikTok%20Account%20Care." target="_blank" rel="noopener">Chat with us</a>
+          </div>
+          <div class="hero-foot">
+            <span><i>✦</i> Panduan berdasarkan isu</span>
+            <span><i>✦</i> Semakan secara telus</span>
+            <span><i>✦</i> Tiada jaminan keputusan</span>
+          </div>
+        </div>
+
+        <div class="visual-card" aria-label="Ilustrasi paparan konsultasi akaun">
+          <div class="visual-top"><span class="visual-label">Account support dashboard</span><span class="status-pill">● Consultation</span></div>
+          <div class="float-chip chip-one"><div class="chip-icon">⌕</div><div><strong>Issue review</strong><small>Understand your case</small></div></div>
+          <div class="phone-mock">
+            <div class="phone-screen">
+              <div class="phone-camera"></div>
+              <div class="profile-circle">T</div>
+              <div class="mock-title">Account Care</div>
+              <div class="mock-sub">Support & appeal guidance</div>
+              <div class="mock-status"><span>Case preparation</span><b>STEP 02 / 03</b></div>
+              <div class="mock-bar"><span></span></div>
+              <div class="mock-note">We help you understand the issue and prepare the next steps through official platform channels.</div>
+            </div>
+          </div>
+          <div class="float-chip chip-two"><div class="chip-icon">✓</div><div><strong>Clear guidance</strong><small>One step at a time</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="trust-strip">
+      <div class="container trust-inner">
+        <div class="trust-item"><b>01</b><span>Account recovery guidance</span></div>
+        <div class="trust-item"><b>02</b><span>Restriction & appeal review</span></div>
+        <div class="trust-item"><b>03</b><span>Direct WhatsApp consultation</span></div>
+      </div>
+    </div>
+
+    <section class="content-section" id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">What we can help with</div>
+            <h2 class="section-title">Our services.</h2>
+            <p class="section-desc">Pilih kategori isu anda. Terangkan situasi secara ringkas dan kami akan bantu jelaskan pilihan langkah yang sesuai.</p>
+          </div>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-card" data-number="01">
+            <div class="service-top"><div class="service-icon">↻</div><span class="service-no">SERVICE 01</span></div>
+            <h3>TikTok Account Recovery</h3>
+            <p>Bantuan memahami isu akaun tidak dapat diakses, akaun digodam atau masalah log masuk. Kami bantu susun langkah pemulihan dan panduan menggunakan saluran rasmi TikTok.</p>
+            <a class="service-link service-wa" href="#" data-service="TikTok Account Recovery">Discuss this service ↗</a>
+          </article>
+
+          <article class="service-card" data-number="02">
+            <div class="service-top"><div class="service-icon">🛍</div><span class="service-no">SERVICE 02</span></div>
+            <h3>Yellow Basket Restriction</h3>
+            <p>Semakan awal berkaitan sekatan beg kuning atau ciri TikTok Shop. Dapatkan panduan memahami notis, menyemak kelayakan dan menyediakan rayuan jika pilihan rayuan tersedia.</p>
+            <a class="service-link service-wa" href="#" data-service="Yellow Basket Restriction">Discuss this service ↗</a>
+          </article>
+
+          <article class="service-card buyer" data-number="03">
+            <div class="service-top"><div class="service-icon">◎</div><span class="service-no">SERVICE 03</span></div>
+            <h3>TikTok Account Buyer Support</h3>
+            <p>Untuk individu yang sedang mempertimbangkan akaun TikTok: konsultasi risiko, keselamatan dan perkara yang perlu disemak. Kami tidak menyenaraikan, menjual atau menjadi orang tengah pemindahan akaun.</p>
+            <a class="service-link service-wa" href="#" data-service="TikTok Account Buyer Support">Ask as a buyer ↗</a>
+          </article>
+
+          <article class="service-card" data-number="04">
+            <div class="service-top"><div class="service-icon">▣</div><span class="service-no">SERVICE 04</span></div>
+            <h3>TikTok LIVE Recovery</h3>
+            <p>Bantuan semakan notis sekatan LIVE, memahami sebab tindakan dan panduan menyediakan rayuan melalui pilihan sokongan rasmi yang disediakan pada akaun.</p>
+            <a class="service-link service-wa" href="#" data-service="TikTok LIVE Recovery">Discuss this service ↗</a>
+          </article>
+        </div>
+
+        <div class="buyer-note">
+          <span>ⓘ</span>
+          <div><b>Nota untuk pembeli akaun:</b> Pemilikan atau pemindahan akaun mungkin tertakluk pada terma dan polisi TikTok. Sila semak polisi semasa dan risiko keselamatan sebelum membuat sebarang keputusan. Kami tidak mengurus transaksi jual beli akaun.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section process-section" id="process">
+      <div class="container">
+        <div class="section-kicker">Simple & transparent</div>
+        <h2 class="section-title">How it works.</h2>
+        <p class="section-desc">Proses konsultasi yang ringkas supaya anda tahu apa yang perlu disediakan dan apa yang boleh dijangkakan.</p>
+        <div class="process-grid">
+          <div class="process-card"><div class="process-num">01</div><h3>Choose your service</h3><p>Pilih isu akaun, beg kuning, TikTok LIVE atau konsultasi pembeli.</p></div>
+          <div class="process-card"><div class="process-num">02</div><h3>Share the issue</h3><p>Terangkan masalah dan kongsi tangkap layar notis yang relevan. Padamkan maklumat peribadi yang sensitif.</p></div>
+          <div class="process-card"><div class="process-num">03</div><h3>Get guidance</h3><p>Kami jelaskan pilihan langkah seterusnya. Sebarang keputusan pemulihan atau rayuan ditentukan oleh TikTok.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="faq">
+      <div class="container">
+        <div class="section-kicker">Need to know</div>
+        <h2 class="section-title">Frequently asked questions.</h2>
+        <div class="faq-grid">
+          <details><summary>Adakah pemulihan akaun dijamin berjaya?</summary><p>Tidak. Keputusan pemulihan, sekatan dan rayuan ditentukan oleh TikTok. Kami hanya menyediakan konsultasi dan panduan proses yang sesuai.</p></details>
+          <details><summary>Perlukah saya berikan password atau OTP?</summary><p>Tidak. Jangan kongsi password, OTP, kod pengesahan atau maklumat log masuk dengan sesiapa. Kami tidak memerlukannya untuk konsultasi awal.</p></details>
+          <details><summary>Boleh bantu isu beg kuning?</summary><p>Kami boleh bantu semak maklumat notis, memahami kemungkinan isu kelayakan atau polisi dan menyusun panduan rayuan jika fungsi itu tersedia.</p></details>
+          <details><summary>Saya ingin membeli akaun TikTok. Boleh bantu?</summary><p>Kami menyediakan konsultasi umum tentang risiko dan keselamatan untuk bakal pembeli, tetapi tidak menjual, mencari penjual atau mengurus pemindahan akaun.</p></details>
+          <details><summary>Bagaimana dengan sekatan TikTok LIVE?</summary><p>Kami boleh membantu anda memahami notis sekatan dan menyediakan langkah semakan atau rayuan melalui saluran rasmi yang tersedia.</p></details>
+          <details><summary>Berapa lama proses rayuan?</summary><p>Tempoh semakan bergantung pada TikTok dan jenis isu. Kami tidak boleh menetapkan atau menjamin tempoh keputusan.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <div>
+            <div class="section-kicker">Let's talk about your case</div>
+            <h2>Need help with your TikTok account?</h2>
+            <p>Mulakan dengan konsultasi ringkas. Pilih isu anda dan hubungi kami melalui WhatsApp.</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn btn-gold" href="https://wa.me/601127838726?text=Hi%2C%20saya%20ingin%20mendapatkan%20konsultasi%20TikTok%20Account%20Care." target="_blank" rel="noopener">Chat on WhatsApp ↗</a>
+            <small>+60 11-2783 8726</small>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <a href="#home" class="brand">
+            <div class="brand-icon">TC</div>
+            <div><div class="brand-name">ACCOUNT<span>CARE.</span></div><span class="brand-sub">TikTok account support</span></div>
+          </a>
+          <p class="footer-copy">Consultation, issue review and appeal guidance for TikTok account-related concerns.</p>
+          <p class="disclaimer">Independent support service. Not affiliated with, endorsed by, or officially connected to TikTok, TikTok Shop or ByteDance. All trademarks belong to their respective owners. Service outcomes and appeal decisions are not guaranteed and remain under the platform's authority.</p>
+        </div>
+        <div><div class="section-kicker">Contact us</div><a class="footer-contact" href="https://wa.me/601127838726" target="_blank" rel="noopener">WhatsApp +60 11-2783 8726 ↗</a></div>
+      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> AccountCare. All rights reserved.</span><span>SECURE. TRANSPARENT. RESPONSIBLE.</span></div>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/601127838726?text=Hi%2C%20saya%20ingin%20bertanya%20tentang%20servis%20TikTok%20Account%20Care." target="_blank" rel="noopener" aria-label="Hubungi melalui WhatsApp"><span>Chat with us</span>✆</a>
+
+  <script>
+    const WA_NUMBER = "601127838726";
+    const makeWhatsAppUrl = (message) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.textContent = open ? "×" : "☰";
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.textContent = "☰";
+    }));
+
+    document.querySelectorAll(".service-wa").forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        const service = link.dataset.service;
+        const message = `Hi, saya ingin bertanya tentang servis: ${service}. Boleh terangkan proses dan maklumat yang diperlukan?`;
+        window.open(makeWhatsAppUrl(message), "_blank", "noopener");
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
